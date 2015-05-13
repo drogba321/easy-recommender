@@ -13,6 +13,7 @@ import org.apache.mahout.cf.taste.impl.eval.GenericRecommenderIRStatsEvaluator;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
@@ -24,7 +25,10 @@ import org.apache.mahout.common.RandomUtils;
 public class RecommenderDemo {
 
 	public static void main(String[] args) throws Exception {
+		long pre = System.currentTimeMillis();
 		recommendDemo();
+		long after = System.currentTimeMillis();
+		System.out.println("time last:" + (after-pre));
 		evaluatePrecisionAndRecall();
 	}
 
@@ -76,5 +80,5 @@ public class RecommenderDemo {
 		System.out.println(stats.getPrecision());
 		System.out.println(stats.getRecall());
 	}
-	
+
 }

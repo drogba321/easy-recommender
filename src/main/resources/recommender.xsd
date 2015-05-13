@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/recommender" 
+	xmlns:tns="http://www.example.org/recommender"
+	elementFormDefault="qualified">
+
+<xs:element name="recommender">
+	<xs:complexType>
+		<xs:sequence>
+			
+			<!-- 输入数据源参数配置 -->
+			<xs:element name="data" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dataType" type="xs:string" />
+						<xs:element name="sourceType" type="xs:string" />
+						<xs:element name="filePath" type="xs:string" />
+						<xs:element name="dbServerName" type="xs:string" />
+						<xs:element name="dbUser" type="xs:string" />
+						<xs:element name="dbPassword" type="xs:string" />
+						<xs:element name="contentData">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dbDatabaseName" type="xs:string" />
+									<xs:element name="userTableName" type="xs:string" />
+									<xs:element name="itemTableName" type="xs:string" />
+									<xs:element name="query" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="userColumn" type="xs:string" />
+												<xs:element name="itemColumn" type="xs:string" />
+												<xs:element name="occur" type="xs:string" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="preferenceData">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="dbDatabaseName" type="xs:string" />
+									<xs:element name="preferenceTable" type="xs:string" />
+									<xs:element name="userIDColumn" type="xs:string" />
+									<xs:element name="itemIDColumn" type="xs:string" />
+									<xs:element name="preferenceColumn" type="xs:string" />
+									<xs:element name="timestampColumn" type="xs:string" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<!-- 相似度度量参数配置 -->
+			<xs:element name="similarity">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="userSimilarity" type="xs:string"
+							default="pearsonCorrelationSimilarity" />
+						<xs:element name="itemSimilarity" type="xs:string"
+							default="pearsonCorrelationSimilarity" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<!-- 算法处理流程参数配置 -->
+			<xs:element name="algo">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="algorithmType" type="xs:string" />
+						<xs:element name="algorithm" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="algorithmName" type="xs:string" />
+									<xs:element name="weight" type="xs:float" />
+									<xs:element name="resultNum" type="xs:int" />
+									<xs:element name="userNeighborhood" type="xs:string" />
+									<xs:element name="threshold" type="xs:float" />
+									<xs:element name="nUser" type="xs:int" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<!-- 算法评估参数配置 -->
+			<xs:element name="evaluate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="deviation" type="xs:boolean"
+							default="true" />
+						<xs:element name="precision" type="xs:boolean"
+							default="true" />
+						<xs:element name="recall" type="xs:boolean" default="true" />
+						<xs:element name="runningTime" type="xs:boolean"
+							default="true" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		
+		<!-- 指定推荐系统的ID，作为该推荐系统的唯一标识 -->
+		<xs:attribute name="recommenderID" type="xs:string" use="required"/>
+	</xs:complexType>
+</xs:schema>
+
+
+
+
+
+
+
+
+

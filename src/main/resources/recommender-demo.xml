@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recommender recommenderID="myrecommender">
+	<data>
+		<dataType>content</dataType>
+		<sourceType>mysql</sourceType>
+		<dbServerName>127.0.0.1</dbServerName>
+		<dbUser>root</dbUser>
+		<dbPassword>root</dbPassword>
+		<contentData>
+			<dbDatabaseName>ucareer</dbDatabaseName>
+			<userTableName>user</userTableName>
+			<itemTableName>occupation</itemTableName>
+			<query>
+				<userColumn>major</userColumn>
+				<itemColumn>occupation_name</itemColumn>
+				<occur>MUST</occur>
+			</query>
+			<query>
+				<userColumn>address</userColumn>
+				<itemColumn>address</itemColumn>
+				<occur>SHOULD</occur>
+			</query>
+		</contentData>
+	</data>	
+	<data>
+		<dataType>preference</dataType>
+		<sourceType>file</sourceType>
+		<filePath>/usr/data/myPreference.csv</filePath>
+	</data>
+	
+	<similarity>
+		<userSimilarity>euclideanDistanceSimilarity</userSimilarity>
+	</similarity>
+	
+	<algo>
+		<algorithmType>weighted</algorithmType>
+		<algorithm>
+			<algorithmName>content-based</algorithmName>
+			<weight>0.5</weight>
+		</algorithm>
+		<algorithm>
+			<algorithmName>user-based-cf</algorithmName>
+			<weight>1.2</weight>
+			<userNeighborhood>threshold</userNeighborhood>
+			<threshold>0.75</threshold>
+		</algorithm>
+	</algo>
+	
+	<evaluate>
+		<deviation>true</deviation>
+		<precision>false</precision>
+		<recall>false</recall>
+	</evaluate>
+</recommender>
+

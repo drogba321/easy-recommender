@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recommender recommenderID="job-recommender">
+	<data>
+		<dataType>content</dataType>
+		<sourceType>mysql</sourceType>
+		<dbServerName>127.0.0.1</dbServerName><dbUser>root</dbUser><dbPassword>root</dbPassword>
+		<contentData>
+			<dbDatabaseName>ucareer</dbDatabaseName>
+			<userTableName>resume</userTableName>
+			<itemTableName>occupation</itemTableName>
+			<query>
+				<userColumn>major</userColumn>
+				<itemColumn>occupation_name</itemColumn>
+				<occur>SHOULD</occur>
+			</query>
+			<query>
+				<userColumn>expect-salary</userColumn>
+				<itemColumn>salary</itemColumn>
+				<occur>MUST</occur>
+			</query>
+			<query>
+				<userColumn>expect-address</userColumn>
+				<itemColumn>address</itemColumn>
+				<occur>MUST</occur>
+			</query>
+		</contentData>
+	</data>	
+	<data>
+		<dataType>preference</dataType>
+		<sourceType>mysql</sourceType>
+		<dbServerName>127.0.0.1</dbServerName><dbUser>root</dbUser><dbPassword>root</dbPassword>
+		<preferenceData>
+			<dbDatabaseName>ucareer</dbDatabaseName>
+			<preferenceTable>applylog</preferenceTable>
+			<userIDColumn>userId</userIDColumn>
+			<itemIDColumn>itemId</itemIDColumn>	
+		</preferenceData>
+	</data>
+	
+	<similarity>
+		<itemSimilarity>pearsonCorrelationSimilarity</itemSimilarity>
+	</similarity>
+	
+	<algo>
+		<algorithmType>waterfall</algorithmType>
+		<algorithm>
+			<algorithmName>content-based</algorithmName><resultNum>100</resultNum>
+		</algorithm>
+		<algorithm>
+			<algorithmName>item-based-cf</algorithmName><resultNum>30</resultNum>
+		</algorithm>
+	</algo>
+</recommender>
+
