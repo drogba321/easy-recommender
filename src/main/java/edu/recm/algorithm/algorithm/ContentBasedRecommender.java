@@ -36,7 +36,7 @@ import edu.recm.algorithm.data.ResultBean;
  * @author niuzhixiang
  *
  */
-public class ContentBasedRecommender {
+public class ContentBasedRecommender implements Recommender {
 	
 	/**
 	 * 该推荐器所属的推荐系统名称
@@ -46,7 +46,7 @@ public class ContentBasedRecommender {
 	/**
 	 * 索引路径
 	 */
-	private static String INDEX_PATH = "D:/index/";
+	private static String INDEX_PATH = "D:/lucene_index/";
 	
 	/**
 	 * 用户与项目特征数据源

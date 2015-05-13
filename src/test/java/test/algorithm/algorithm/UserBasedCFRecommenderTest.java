@@ -87,7 +87,7 @@ public class UserBasedCFRecommenderTest {
 		long preTime = System.currentTimeMillis();
 		
 		FilePreferenceData filePreferenceData = new FilePreferenceData("D:/preferenceData/applylog.csv");
-		UserBasedCFRecommender recommender = new UserBasedCFRecommender("job-recommender", filePreferenceData, "tanimotoCoefficientSimilarity", 100, null);
+		UserBasedCFRecommender recommender = new UserBasedCFRecommender("job-recommender", filePreferenceData, "tanimotoCoefficientSimilarity", null, 0.14);
 		recommender.doRecommend(21, 10);
 		
 		long afterTime = System.currentTimeMillis();

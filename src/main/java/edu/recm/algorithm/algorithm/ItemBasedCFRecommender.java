@@ -23,7 +23,7 @@ import edu.recm.algorithm.similarity.UserNeighborhoodFactory;
  * @author niuzhixiang
  *
  */
-public class ItemBasedCFRecommender {
+public class ItemBasedCFRecommender implements edu.recm.algorithm.algorithm.Recommender {
 	
 	/**
 	 * 该推荐器所属的推荐系统名称
@@ -62,7 +62,7 @@ public class ItemBasedCFRecommender {
 	 * @return
 	 * @throws TasteException
 	 */
-	public List<ResultBean> doRecommend(int userid, int resultNum) throws TasteException {
+	public List<ResultBean> doRecommend(int userid, int resultNum) throws Exception {
 		List<RecommendedItem> recommendedItems = this.recommender.recommend(userid, resultNum);
 		List<ResultBean> resultList = new ArrayList<ResultBean>();
 		for (RecommendedItem recommendedItem : recommendedItems) {
