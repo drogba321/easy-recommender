@@ -14,6 +14,8 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -21,6 +23,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -30,13 +33,14 @@ import org.apache.lucene.util.Version;
 import edu.recm.algorithm.data.MySQLContentData;
 import edu.recm.algorithm.data.QueryUnit;
 import edu.recm.algorithm.data.ResultBean;
+import edu.recm.util.MySQLUtil;
 
 /**
- * 基于内容的推荐器
+ * 基于内容的推荐器（采用变种形式的算法）
  * @author niuzhixiang
  *
  */
-public class ContentBasedRecommender implements Recommender {
+public class ContentBasedRecommender implements MyRecommender {
 	
 	/**
 	 * 该推荐器所属的推荐系统名称
@@ -58,11 +62,21 @@ public class ContentBasedRecommender implements Recommender {
 	 */
 	private Statement statement;
 	
-	public ContentBasedRecommender(String recommenderSystemName, MySQLContentData contentData) {
+	/**
+	 * 过滤器，使得searcher在经过过滤之后的索引文档上进行搜索
+	 */
+	private Filter filter;
+	
+	public void setFilter(Filter filter) {
+		this.filter = filter;
+	}
+
+	public ContentBasedRecommender(String recommenderSystemName, MySQLContentData contentData, Filter filter) {
 		super();
 		this.recommenderSystemName = recommenderSystemName;
 		this.contentData = contentData;
-		this.statement = MySQLContentData.connectMySQL(contentData.getDbServerName(), contentData.getDbUser(), contentData.getDbPassword(), contentData.getDbDatabaseName());
+		this.filter = filter;
+		this.statement = MySQLUtil.connectMySQL(contentData.getDbServerName(), contentData.getDbUser(), contentData.getDbPassword(), contentData.getDbDatabaseName());
 	}
 
 	/**
@@ -99,7 +113,7 @@ public class ContentBasedRecommender implements Recommender {
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
 				Document document = new Document();
-				Field idField = new IntField("ID", rs.getInt("ID"), Store.YES);
+				Field idField = new TextField("ID", String.valueOf(rs.getInt("ID")), Store.YES);
 				document.add(idField);
 				for (QueryUnit queryUnit : queries) {
 					document.add(new TextField(queryUnit.getItemField(), rs.getString(queryUnit.getItemField()), Store.NO));
@@ -179,20 +193,13 @@ public class ContentBasedRecommender implements Recommender {
 		 * @return
 		 * @throws IOException
 		 */
-		public ScoreDoc[] search(Query query, int resultNum) throws IOException {
+		public ScoreDoc[] search(Query query, int resultNum, Filter filter) throws IOException {
 			IndexReader indexReader = DirectoryReader.open(FSDirectory.open(new File(ContentBasedRecommender.INDEX_PATH + ContentBasedRecommender.this.recommenderSystemName)));
 			this.searcher = new IndexSearcher(indexReader);
-			return this.searcher.search(query, resultNum).scoreDocs;
+			return this.searcher.search(query, filter, resultNum).scoreDocs;
 		}
 	}
 	
-	/**
-	 * 为指定用户执行推荐，生成指定数目的推荐结果
-	 * @param userid 用户ID
-	 * @param resultNum 推荐结果数目
-	 * @return
-	 * @throws Exception
-	 */
 	public List<ResultBean> doRecommend(int userid, int resultNum) throws Exception {
 		//1、创建索引内部类
 		IndexBuilder indexBuilder = this.new IndexBuilder();
@@ -209,7 +216,7 @@ public class ContentBasedRecommender implements Recommender {
 		//3、创建搜索内部类
 		Searcher searcher = this.new Searcher();
 		//执行搜索，获取搜索结果
-		ScoreDoc[] hits = searcher.search(queryBuilder.getBooleanQuery(), resultNum);
+		ScoreDoc[] hits = searcher.search(queryBuilder.getBooleanQuery(), resultNum, this.filter);
 		
 		//4、组装搜索结果
 		List<ResultBean> resultList = new ArrayList<ResultBean>();
@@ -220,6 +227,7 @@ public class ContentBasedRecommender implements Recommender {
 			ResultBean rb = new ResultBean(id, score);
 			resultList.add(rb);
 		}
+		System.out.println("========");
 		return resultList;
 	}
 }

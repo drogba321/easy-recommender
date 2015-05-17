@@ -116,33 +116,6 @@ public class MySQLContentData {
 		// TODO Auto-generated constructor stub
 	}
 	
-	/**
-	 * 连接MySQL
-	 * @param serverName
-	 * @param user
-	 * @param password
-	 * @param dbName
-	 * @return Statement对象
-	 */
-	public static Statement connectMySQL(String serverName, String user, String password, String dbName) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://" + serverName + ":3306/" + dbName, user, password);
-			Statement statement = connection.createStatement();
-			return statement;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	public MySQLContentData(String dbServerName, String dbUser,
 			String dbPassword, String dbDatabaseName, String userTableName,
 			String itemTableName, List<QueryUnit> queryList) {

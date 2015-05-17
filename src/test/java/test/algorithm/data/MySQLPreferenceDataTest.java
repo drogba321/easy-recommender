@@ -26,6 +26,7 @@ public class MySQLPreferenceDataTest {
 	 * @throws Exception
 	 */
 	@Test
+	@Ignore
 	public void testAccessMySQLPreferenceWithPrefValue() throws Exception{
 		long preTime = System.currentTimeMillis();
 		

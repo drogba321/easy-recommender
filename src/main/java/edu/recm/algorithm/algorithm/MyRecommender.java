@@ -8,8 +8,15 @@ import edu.recm.algorithm.data.ResultBean;
  * @author niuzhixiang
  *
  */
-public interface Recommender {
+public interface MyRecommender {
 	
+	/**
+	 * 为指定的用户进行推荐
+	 * @param userid 用户ID
+	 * @param resultNum 推荐结果数目
+	 * @return 推荐结果集
+	 * @throws Exception
+	 */
 	public List<ResultBean> doRecommend(int userid, int resultNum) throws Exception;
 
 }

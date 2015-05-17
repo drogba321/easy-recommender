@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import edu.recm.algorithm.algorithm.Recommender;
+import edu.recm.algorithm.algorithm.MyRecommender;
 import edu.recm.algorithm.data.ResultBean;
 
 /**
@@ -19,21 +19,34 @@ import edu.recm.algorithm.data.ResultBean;
  * @author niuzhixiang
  *
  */
-public class WeightedMixRecommender {
+public class WeightedMixRecommender implements MyRecommender {
 	
-	private List<Entry<Recommender, Float>> recommenderList;
+	private List<Entry<MyRecommender, Float>> recommenderList;
 	
-	/**
-	 * 执行加权型混合推荐
-	 * @param userid
-	 * @param resultNum
-	 * @return
-	 * @throws Exception
-	 */
+	public List<Entry<MyRecommender, Float>> getRecommenderList() {
+		return recommenderList;
+	}
+
+	public void setRecommenderList(List<Entry<MyRecommender, Float>> recommenderList) {
+		this.recommenderList = recommenderList;
+	}
+
+	public WeightedMixRecommender() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public WeightedMixRecommender(
+			List<Entry<MyRecommender, Float>> recommenderList) {
+		super();
+		this.recommenderList = recommenderList;
+	}
+
 	public List<ResultBean> doRecommend(int userid, int resultNum) throws Exception {
 		Map<List<ResultBean>, Float> map = new HashMap<List<ResultBean>, Float>();
-		for (Entry<Recommender, Float> recommenderEntry : this.recommenderList) {
-			Recommender recommender = recommenderEntry.getKey();
+		//遍历所有Recommender
+		for (Entry<MyRecommender, Float> recommenderEntry : this.recommenderList) {
+			MyRecommender recommender = recommenderEntry.getKey();
 			Float weight = recommenderEntry.getValue();
 			//获得每个Recommender的归一化推荐结果列表
 			List<ResultBean> normalizedList = this.normalize(recommender.doRecommend(userid, resultNum));
@@ -126,7 +139,14 @@ public class WeightedMixRecommender {
 			}
 		});
 		
-		return finalResultList.size() < resultNum ? finalResultList : finalResultList.subList(0, resultNum);
+		//打印最终返回的混合推荐结果集
+		List<ResultBean> returnList = finalResultList.size() < resultNum ? finalResultList : finalResultList.subList(0, resultNum);
+		for (ResultBean resultBean : returnList) {
+			System.out.println("integrating score - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
+		}
+		System.out.println("========");
+		
+		return returnList;
 	}
-
+	
 }

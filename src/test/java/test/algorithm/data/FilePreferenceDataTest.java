@@ -44,6 +44,7 @@ public class FilePreferenceDataTest {
 	}
 	
 	@Test
+	@Ignore
 	@SuppressWarnings("deprecation")
 	public void testAccessFilePreferenceWithoutPrefValue() throws Exception {
 		long preTime = System.currentTimeMillis();
