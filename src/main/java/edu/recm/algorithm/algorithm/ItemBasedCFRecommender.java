@@ -16,54 +16,26 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import edu.recm.algorithm.data.AbstractPreferenceData;
 import edu.recm.algorithm.data.ResultBean;
 import edu.recm.algorithm.similarity.SimilarityFactory;
-import edu.recm.algorithm.similarity.UserNeighborhoodFactory;
 
 /**
  * 基于项目的协同过滤推荐器
  * @author niuzhixiang
  *
  */
-public class ItemBasedCFRecommender implements edu.recm.algorithm.algorithm.Recommender {
-	
-	/**
-	 * 该推荐器所属的推荐系统名称
-	 */
-	private String recommenderSystemName;
-	
-	/**
-	 * 用户偏好数据源
-	 */
-	private AbstractPreferenceData preferenceData;
-	
-	/**
-	 * 该推荐器所使用的项目相似度度量方法
-	 */
-	private String itemSimilarityType;
-	
-	private Recommender recommender;
+public class ItemBasedCFRecommender extends AbstractCFRecommender {
 
 	public ItemBasedCFRecommender(String recommenderSystemName,
 			AbstractPreferenceData preferenceData,
-			String itemSimilarityType) throws TasteException {
-		super();
-		this.recommenderSystemName = recommenderSystemName;
-		this.preferenceData = preferenceData;
-		this.itemSimilarityType = itemSimilarityType;
+			String similarityType) throws TasteException {
+		super(recommenderSystemName, preferenceData, similarityType);
 		
-		DataModel dataModel = this.preferenceData.getDataModel();
-		ItemSimilarity itemSimilarity = SimilarityFactory.createItemSimilarity(this.itemSimilarityType, dataModel);
-		this.recommender = new GenericItemBasedRecommender(dataModel, itemSimilarity);
+		DataModel dataModel = this.getPreferenceData().getDataModel();
+		ItemSimilarity itemSimilarity = SimilarityFactory.createItemSimilarity(this.getSimilarityType(), dataModel);
+		this.setRecommender(new GenericItemBasedRecommender(dataModel, itemSimilarity));
 	}
 
-	/**
-	 * 为指定用户执行推荐，生成指定数目的推荐结果
-	 * @param userid 用户ID
-	 * @param resultNum 推荐结果数目
-	 * @return
-	 * @throws TasteException
-	 */
 	public List<ResultBean> doRecommend(int userid, int resultNum) throws Exception {
-		List<RecommendedItem> recommendedItems = this.recommender.recommend(userid, resultNum);
+		List<RecommendedItem> recommendedItems = this.getRecommender().recommend(userid, resultNum);
 		List<ResultBean> resultList = new ArrayList<ResultBean>();
 		for (RecommendedItem recommendedItem : recommendedItems) {
 			ResultBean rb = new ResultBean();
@@ -72,7 +44,7 @@ public class ItemBasedCFRecommender implements edu.recm.algorithm.algorithm.Reco
 			System.out.println("id:" + rb.getId() + ", score:" + rb.getScore());
 			resultList.add(rb);
 		}
+		System.out.println("========");
 		return resultList;
 	}
-
 }

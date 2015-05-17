@@ -14,8 +14,20 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
 import edu.recm.algorithm.data.AbstractPreferenceData;
 
+/**
+ * 创建相似度度量方法的工厂类
+ * @author niuzhixiang
+ *
+ */
 public class SimilarityFactory {
 	
+	/**
+	 * 创建指定类型的用户相似度度量机制
+	 * @param similarityType 指定的类型
+	 * @param dataModel 数据源
+	 * @return 指定类型的用户相似度度量机制实现类
+	 * @throws TasteException
+	 */
 	public static UserSimilarity createUserSimilarity(String similarityType, DataModel dataModel) throws TasteException {
 		if (similarityType.toLowerCase().equals("pearsoncorrelationsimilarity")) {
 			return new PearsonCorrelationSimilarity(dataModel); 
@@ -39,6 +51,13 @@ public class SimilarityFactory {
 		return new PearsonCorrelationSimilarity(dataModel);
 	}
 	
+	/**
+	 * 创建指定类型的项目相似度度量机制
+	 * @param similarityType 指定的类型
+	 * @param dataModel 数据源
+	 * @return 指定类型的项目相似度度量机制实现类
+	 * @throws TasteException
+	 */
 	public static ItemSimilarity createItemSimilarity(String similarityType, DataModel dataModel) throws TasteException {
 		if (similarityType.toLowerCase().equals("pearsoncorrelationsimilarity")) {
 			return new PearsonCorrelationSimilarity(dataModel); 
