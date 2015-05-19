@@ -25,7 +25,6 @@ import edu.recm.util.MyEntry;
 
 public class WeightedMixRecommenderTest {
 	
-	
 	/**
 	 * 测试归一化的方法
 	 */

@@ -192,32 +192,6 @@ public class MySQLPreferenceData extends AbstractPreferenceData {
 	}
 	
 	/**
-	 * 手动连接MySQL
-	 * @param serverName
-	 * @param user
-	 * @param password
-	 * @return Statement对象
-	 */
-	public static Statement connectMySQL(String serverName, String user, String password, String dbName) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://" + serverName + ":3306/" + dbName, user, password);
-			Statement statement = connection.createStatement();
-			return statement;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
 	 * 生成有偏好值的DataModel
 	 * @param dbServerName
 	 * @param dbUser
