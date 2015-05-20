@@ -76,12 +76,17 @@ public class WaterfallMixRecommender implements MyRecommender {
 			}
 		}
 		
-		//打印最终返回的混合推荐结果集
-		List<ResultBean> returnList = resultNum < finalResultList.size() ? finalResultList.subList(0, resultNum) : finalResultList;
-		for (ResultBean resultBean : returnList) {
-			System.out.println("final - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
+		//若最终推荐结果集不为空，则打印并返回最终的混合推荐结果集
+		if (finalResultList != null && finalResultList.size() > 0) {
+			List<ResultBean> returnList = resultNum < finalResultList.size() ? finalResultList.subList(0, resultNum) : finalResultList;
+			for (ResultBean resultBean : returnList) {
+				System.out.println("final - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
+			}
+			return returnList;
 		}
-		return returnList;
+		else {
+			return null;
+		}
 	}
 	
 	/**
@@ -117,6 +122,11 @@ public class WaterfallMixRecommender implements MyRecommender {
 		
 		if (! (theRecommender.getPreferenceData() instanceof MySQLPreferenceData)) {
 			throw new Exception("在瀑布型混合推荐中仅支持来自MySQL数据源的用户偏好数据！");
+		}
+		
+		//若上一个Recommender的推荐结果集为空，则直接令当前Recommender的推荐结果集也为空
+		if (inputList == null || inputList.size() < 1) {
+			return null;
 		}
 		
 		//获取当前Recommender的原输入（未经过上一个Recommender筛选的用户偏好数据）
@@ -182,7 +192,6 @@ public class WaterfallMixRecommender implements MyRecommender {
 		} finally {		
 			return resultList;
 		}
-	
 	}
 	
 	/**
@@ -198,6 +207,11 @@ public class WaterfallMixRecommender implements MyRecommender {
 	public List<ResultBean> currentIsContentBased(MyRecommender recommender, List<ResultBean> inputList, int userid, int resultNum) throws Exception {
 		if (! (recommender instanceof ContentBasedRecommender)) {
 			throw new Exception("当前推荐器应为基于内容的推荐器！");
+		}
+		
+		//若上一个Recommender的推荐结果集为空，则直接令当前Recommender的推荐结果集也为空
+		if (inputList == null || inputList.size() < 1) {
+			return null;
 		}
 		
 		//当前Recommender必须是基于内容的推荐器

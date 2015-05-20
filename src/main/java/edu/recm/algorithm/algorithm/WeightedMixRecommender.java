@@ -62,7 +62,7 @@ public class WeightedMixRecommender implements MyRecommender {
 	 * @return 归一化评分之后的推荐结果集
 	 */
 	public List<ResultBean> normalize(List<ResultBean> inputList) {
-		if (inputList == null || inputList.size() == 0) {
+		if (inputList == null || inputList.size() < 1) {
 			return null;
 		}
 		//推荐结果列表中的最高评分必然是第一个项目的评分（因为生成推荐结果的时候是按评分从高到低返回的）
@@ -90,36 +90,38 @@ public class WeightedMixRecommender implements MyRecommender {
 			Map.Entry<List<ResultBean>, Float> entry = (Map.Entry) iterator.next();
 			List<ResultBean> normalizedList = entry.getKey();
 			Float weight = entry.getValue();
-			//依次遍历该推荐列表中的项目（当前项目）
-			for (int i = 0; i < normalizedList.size(); i++) {
-				ResultBean currentRb = normalizedList.get(i);
-				//初始时，最终结果集finalResultList为空，直接将当前项目添加进最终结果集
-				if (finalResultList.isEmpty()) {
-					BigDecimal b1 = new BigDecimal(Double.toString(currentRb.getScore()));
-					BigDecimal b2 = new BigDecimal(Double.toString(weight));
-					currentRb.setScore(b1.multiply(b2).setScale(2, RoundingMode.HALF_UP).floatValue());
-					finalResultList.add(currentRb);
-					continue;
-				}
-				int currentSize = finalResultList.size();
-				//遍历最终结果集finalResultList中的每个项目（即已存在于最终结果集中的项目）
-				for (int j = 0; j < currentSize; ) {
-					ResultBean existedRb = finalResultList.get(j);
-					//若当前项目已存在于最终结果集finalResultList中，则更新该项目的评分
-					if (existedRb.getId() == currentRb.getId()) {		
-						BigDecimal b1 = new BigDecimal(Double.toString(existedRb.getScore()));
-						BigDecimal b2 = new BigDecimal(Double.toString(currentRb.getScore()));
-						BigDecimal b3 = new BigDecimal(Double.toString(weight));
-						existedRb.setScore(b1.add(b2.multiply(b3)).setScale(2, RoundingMode.HALF_UP).floatValue());
-						break;
-					}
-					++j;
-					//否则，当前项目不存在于最终结果集finalResultList中，则直接将当前项目添加到最终结果集中
-					if (j >= currentSize) {
+			//若该推荐结果列表不为空，则依次遍历该列表中的项目（当前项目）
+			if (normalizedList != null && normalizedList.size() > 0) {
+				for (int i = 0; i < normalizedList.size(); i++) {
+					ResultBean currentRb = normalizedList.get(i);
+					//初始时，最终结果集finalResultList为空，直接将当前项目添加进最终结果集
+					if (finalResultList.isEmpty()) {
 						BigDecimal b1 = new BigDecimal(Double.toString(currentRb.getScore()));
 						BigDecimal b2 = new BigDecimal(Double.toString(weight));
 						currentRb.setScore(b1.multiply(b2).setScale(2, RoundingMode.HALF_UP).floatValue());
 						finalResultList.add(currentRb);
+						continue;
+					}
+					int currentSize = finalResultList.size();
+					//遍历最终结果集finalResultList中的每个项目（即已存在于最终结果集中的项目）
+					for (int j = 0; j < currentSize; ) {
+						ResultBean existedRb = finalResultList.get(j);
+						//若当前项目已存在于最终结果集finalResultList中，则更新该项目的评分
+						if (existedRb.getId() == currentRb.getId()) {		
+							BigDecimal b1 = new BigDecimal(Double.toString(existedRb.getScore()));
+							BigDecimal b2 = new BigDecimal(Double.toString(currentRb.getScore()));
+							BigDecimal b3 = new BigDecimal(Double.toString(weight));
+							existedRb.setScore(b1.add(b2.multiply(b3)).setScale(2, RoundingMode.HALF_UP).floatValue());
+							break;
+						}
+						++j;
+						//否则，当前项目不存在于最终结果集finalResultList中，则直接将当前项目添加到最终结果集中
+						if (j >= currentSize) {
+							BigDecimal b1 = new BigDecimal(Double.toString(currentRb.getScore()));
+							BigDecimal b2 = new BigDecimal(Double.toString(weight));
+							currentRb.setScore(b1.multiply(b2).setScale(2, RoundingMode.HALF_UP).floatValue());
+							finalResultList.add(currentRb);
+						}
 					}
 				}
 			}

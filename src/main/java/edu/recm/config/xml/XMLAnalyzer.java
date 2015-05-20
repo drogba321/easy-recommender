@@ -37,6 +37,11 @@ import edu.recm.config.model.WeightedMixAlgorithmConfigModel;
 import edu.recm.util.ConfigVariables;
 import edu.recm.util.MyEntry;
 
+/**
+ * 解析推荐系统的XML配置文件
+ * @author niuzhixiang
+ *
+ */
 public class XMLAnalyzer {
 
 	/**
@@ -158,25 +163,33 @@ public class XMLAnalyzer {
 	 */
 	private SimilarityListConfigModel analyzeSimilarityPart(Element rootElement) {
 		Element similarityElement = rootElement.element("similarity");
-		List<AbstractSimilarityConfigModel> similarityConfigModelList = new ArrayList<AbstractSimilarityConfigModel>();
-		List<Element> similarityElementList = similarityElement.elements();
-		for (Element element : similarityElementList) {
-			//1、若是用户间的相似度度量方法
-			if (element.getName().equals("userSimilarity")) {
-				UserSimilarityConfigModel userSimilarityConfigModel = new UserSimilarityConfigModel(element.getText());
-				similarityConfigModelList.add(userSimilarityConfigModel);
+		//若存在"similarity"标签，才进行相似度度量方法的解析操作，否则什么都不做
+		if (similarityElement != null) {
+			List<AbstractSimilarityConfigModel> similarityConfigModelList = new ArrayList<AbstractSimilarityConfigModel>();
+			List<Element> similarityElementList = similarityElement.elements();
+			if (similarityElementList != null && similarityElementList.size() > 0) {
+				for (Element element : similarityElementList) {
+					//1、若是用户间的相似度度量方法
+					if (element.getName().equals("userSimilarity")) {
+						UserSimilarityConfigModel userSimilarityConfigModel = new UserSimilarityConfigModel(element.getText());
+						similarityConfigModelList.add(userSimilarityConfigModel);
+					}
+					//2、若是项目间的相似度度量方法
+					else if (element.getName().equals("itemSimilarity")) {
+						ItemSimilarityConfigModel itemSimilarityConfigModel = new ItemSimilarityConfigModel(element.getText());
+						similarityConfigModelList.add(itemSimilarityConfigModel);
+					}
+					//3、异常情况
+					else {
+						
+					}
+				}
 			}
-			//2、若是项目间的相似度度量方法
-			else if (element.getName().equals("itemSimilarity")) {
-				ItemSimilarityConfigModel itemSimilarityConfigModel = new ItemSimilarityConfigModel(element.getText());
-				similarityConfigModelList.add(itemSimilarityConfigModel);
-			}
-			//3、异常情况
-			else {
-				
-			}
+			return new SimilarityListConfigModel(similarityConfigModelList);
 		}
-		return new SimilarityListConfigModel(similarityConfigModelList);
+		else {
+			return new SimilarityListConfigModel(null);
+		}	
 	}
 
 	/**
