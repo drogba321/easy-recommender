@@ -3,6 +3,7 @@ package edu.recm.algorithm.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
@@ -23,6 +24,8 @@ import edu.recm.algorithm.similarity.SimilarityFactory;
  *
  */
 public class ItemBasedCFRecommender extends AbstractCFRecommender {
+	
+	static Logger logger = Logger.getLogger(ItemBasedCFRecommender.class);
 
 	public ItemBasedCFRecommender(String recommenderSystemName,
 			AbstractPreferenceData preferenceData,
@@ -41,10 +44,10 @@ public class ItemBasedCFRecommender extends AbstractCFRecommender {
 			ResultBean rb = new ResultBean();
 			rb.setId(Integer.parseInt(recommendedItem.getItemID()+""));
 			rb.setScore(recommendedItem.getValue());
-			System.out.println("id:" + rb.getId() + ", score:" + rb.getScore());
+			logger.info("id:" + rb.getId() + ", score:" + rb.getScore());
 			resultList.add(rb);
 		}
-		System.out.println("========");
+		logger.info("========================");
 		return resultList;
 	}
 }

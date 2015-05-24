@@ -116,7 +116,7 @@ public class WaterfallMixRecommenderTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void testDoRecommend() throws Exception {
 		long preTime = System.currentTimeMillis();
 	

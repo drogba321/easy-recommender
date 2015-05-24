@@ -1,0 +1,61 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>BaseStation</display-name>
+  
+   <!-- 指定Spring IoC容器的配置文件（管理非Web层的bean） -->
+   <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+        	classpath:applicationContext.xml
+        </param-value>
+    </context-param>
+ 
+   <!-- 配置字符编码过滤器 -->
+   <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+	</filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping> 
+    
+    <!-- 在Web容器启动时加载Spring IoC的配置文件（该配置文件管理非Web层的bean） -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!-- 配置Spring Web MVC -->
+    <servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 指定Spring MVC的配置文件（该配置文件管理Web层的bean）。DispatcherServlet
+        	会加载该配置文件。（注意该配置文件与上述配置文件两者的区别：一个是管理非Web层
+        	的、与底层服务相关的bean，一个是管理Web层相关的bean）
+         	如果此处不指定的话，默认配置文件名是/WEB-INF/{servletname}-servlet.xml，
+         	其中servletname为DispatcherServlet的别名，此处为dispatcherServlet-->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:dispatcherServlet-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+	<welcome-file-list>
+	    <welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

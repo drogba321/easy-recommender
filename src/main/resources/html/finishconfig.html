@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>完成配置</title>
+	<link rel="stylesheet" href="../css/style.css" type="text/css" media="all" />
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script src="../js/jquery.cookie.js"></script>
+	<script src="../js/finishConfig.js"></script>
+</head>
+<body>
+<!-- Header -->
+<div id="header">
+	<div class="shell">
+		<!-- Logo + Top Nav -->
+		<div id="top">
+			<h1><a>Simple Recommender</a></h1>
+		</div>
+		<!-- End Logo + Top Nav -->
+		
+		<!-- Main Nav -->
+		<div id="navigation">
+			<ul>
+				<li><a><span>1.开始配置</span></a></li>
+			    <li><a><span>2.数据源参数配置</span></a></li>
+			    <li><a><span>3.相似度度量方法参数配置</span></a></li>
+			    <li><a><span>4.算法处理流程</span></a></li>
+			    <li><a><span>5.算法评估机制</span></a></li>
+				<li><a class="active"><span>6.完成配置</span></a></li>
+			</ul>
+		</div>
+		<!-- End Main Nav -->
+	</div>
+</div>
+<!-- End Header -->
+
+<!-- Container -->
+<div id="container">
+	<div class="shell">
+		
+		<!-- Small Nav -->
+		<!--<div class="small-nav">
+			<a href="#">Dashboard</a>
+			<span>&gt;</span>
+			Current Articles
+		</div>-->
+		<!-- End Small Nav -->
+
+		<!-- Main -->
+		<div id="main">
+			<div class="cl">&nbsp;</div>
+			
+			<!-- Content -->
+			<div id="content">
+				
+				<!-- Box -->
+				<div class="box" title="data">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>输入数据源配置信息</h2>
+					</div>
+					<!-- End Box Head -->
+					
+					<form method="post">
+
+						<!-- Form -->
+						<div class="form config-value" id="data-config">
+							<div id="content-data" style="display: none">
+								<p class="inline-field">
+									<label>输入数据源 <span title="dataType"></span></label>
+									<hr>
+								</p>
+								<p>
+									<label>
+										MySQL主机名：<span title="dbServerName"></span>
+										用户名：<span title="dbUser"></span>
+										密码：<span title="dbPassword"></span>
+									</label>
+								</p>
+								<p>
+									<label>
+										数据库名：<span title="dbDatabaseName"></span>
+										用户表名：<span title="userTable"></span>
+										项目表名：<span title="itemTable"></span>
+									</label>
+								</p>
+								<p>
+									<label>
+										查询条件
+									</label>
+									<ol title="queryListOl">
+									</ol>
+								</p>
+							</div>
+							<div id="mysql-preference" style="display: none">
+								<p class="inline-field">
+									<label>输入数据源 <span title="dataType"></span></label>
+								<hr>
+								</p>
+								<p>
+									<label>
+										MySQL主机名：<span title="dbServerName"></span>
+										用户名：<span title="dbUser"></span>
+										密码：<span title="dbPassword"></span>
+									</label>
+								</p>
+								<p>
+									<label>
+										数据库名：<span title="dbDatabaseName"></span>
+										用户偏好数据表名：<span title="preferenceTable"></span>
+									</label>
+								</p>
+								<p>
+									<label>
+										用户ID字段：<span title="userIDColumn"></span>
+										项目ID字段：<span title="itemIDColumn"></span>
+									</label>
+								</p>
+								<p>
+									<label>
+										用户偏好值字段：<span title="preferenceColumn"></span>
+										时间戳字段：<span title="timestampColumn"></span>
+									</label>
+								</p>
+								<p></p>
+							</div>
+							<div id="file-preference" style="display: none">
+								<p class="inline-field">
+									<label>输入数据源<span title="dataType"></span></label>
+								<hr>
+								</p>
+								<p>
+									<label>
+										文件路径：<span title="filePath"></span>
+									</label>
+								</p>
+								<p></p>
+							</div>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<div class="box" title="similarity">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>相似度度量方法配置信息</h2>
+					</div>
+					<!-- End Box Head -->
+
+					<form method="post">
+
+						<!-- Form -->
+						<div class="form config-value" id="similarity-config">
+							<ol title="similarityListOl">
+							</ol>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<div class="box" title="algorithm">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>算法处理流程配置信息</h2>
+					</div>
+					<!-- End Box Head -->
+
+					<form method="post">
+
+						<!-- Form -->
+						<div class="form config-value" id="algorithm-config">
+							<div id="content-based" style="display: none">
+								<p class="inline-field">
+									<label>算法类型 <span title="algorithmType"></span></label>
+								</p>
+								<p></p>
+							</div>
+							<div id="user-based-cf" style="display: none">
+								<p class="inline-field">
+									<label>算法类型 <span title="algorithmType"></span></label>
+								</p>
+								<p>
+									<label>
+										用户邻域：<span title="userNeighborhoodType"></span>
+										用户邻域大小：<span title="nearestN"></span>
+										阈值：<span title="threshold"></span>
+									</label>
+								</p>
+								<p></p>
+							</div>
+							<div id="item-based-cf" style="display: none">
+								<p class="inline-field">
+									<label>算法类型 <span title="algorithmType"></span></label>
+								</p>
+								<p></p>
+							</div>
+							<div id="weighted" style="display: none">
+								<p class="inline-field">
+									<label>算法类型 <span title="algorithmType"></span></label>
+								<hr>
+								</p>
+								<p>
+									<label>
+										混合推荐中使用的基本算法列表
+									</label>
+								<ol title="singleAlgorithmListOl">
+								</ol>
+								</p>
+							</div>
+							<div id="waterfall" style="display: none">
+								<p class="inline-field">
+									<label>算法类型 <span title="algorithmType"></span></label>
+								<hr>
+								</p>
+								<p>
+									<label>
+										混合推荐中使用的基本算法列表
+									</label>
+								<ol title="singleAlgorithmListOl">
+								</ol>
+								</p>
+							</div>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<div class="box" title="evaluator">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>推荐系统评估机制配置信息</h2>
+					</div>
+					<!-- End Box Head -->
+
+					<form method="post">
+
+						<!-- Form -->
+						<div class="form config-value" id="evaluator-config">
+							<ol title="similarityListOl">
+								<li>是否评估预测评分差：<span title="deviation"></span></li>
+								<li>是否评估查准率：<span title="precision"></span></li>
+								<li>是否评估查全率：<span title="recall"></span></li>
+								<li>是否评估运行时间：<span title="runningTime"></span></li>
+							</ol>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+				<!-- End Box -->
+
+			</div>
+			<!-- End Content -->
+			<!-- Sidebar -->
+			<div id="sidebar">
+				
+				<!-- Box -->
+				<div class="box">
+					
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>功能</h2>
+					</div>
+					<!-- End Box Head-->
+					
+					<div class="box-content">
+						<p>
+
+							<input type="button" onclick="restart()" class="next-button" value="重新配置"/>
+						</p>
+						<div class="cl">&nbsp;</div>
+
+
+					</div>
+				</div>
+				<!-- End Box -->
+			</div>
+			<!-- End Sidebar -->
+			
+			<div class="cl">&nbsp;</div>			
+		</div>
+		<!-- Main -->
+	</div>
+</div>
+<!-- End Container -->
+
+<!-- Footer -->
+<div id="footer">
+	<div class="shell-bottom">
+		<span class="left-bottom">&copy; 2015 - Designed by Niuzhixiang. Communication University of China</span>
+	</div>
+</div>
+<!-- End Footer -->
+	
+</body>
+</html>

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -26,7 +27,14 @@ import edu.recm.algorithm.data.MySQLPreferenceData;
 import edu.recm.algorithm.data.ResultBean;
 import edu.recm.util.MySQLUtil;
 
+/**
+ * 瀑布型混合推荐器
+ * @author niuzhixiang
+ *
+ */
 public class WaterfallMixRecommender implements MyRecommender {
+	
+	static Logger logger = Logger.getLogger(WaterfallMixRecommender.class);
 	
 	private List<Entry<MyRecommender, Integer>> recommenderList;
 
@@ -80,7 +88,7 @@ public class WaterfallMixRecommender implements MyRecommender {
 		if (finalResultList != null && finalResultList.size() > 0) {
 			List<ResultBean> returnList = resultNum < finalResultList.size() ? finalResultList.subList(0, resultNum) : finalResultList;
 			for (ResultBean resultBean : returnList) {
-				System.out.println("final - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
+				logger.info("final - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
 			}
 			return returnList;
 		}
@@ -186,9 +194,9 @@ public class WaterfallMixRecommender implements MyRecommender {
 			//2、若经过上一个Recommender筛选之后的用户偏好数据不包含当前用户，则无法针对当前用户做基于项目的协同过滤推荐，只能将上一个Recommender的推荐结果集截取前一部分作为当前Recommender的推荐结果集
 			resultList = inputList.subList(0, resultNum);
 			for (ResultBean resultBean : resultList) {
-				System.out.println("id:" + resultBean.getId() + ", score:" + resultBean.getScore());
+				logger.info("id:" + resultBean.getId() + ", score:" + resultBean.getScore());
 			}
-			System.out.println("========");
+			logger.info("========================");
 		} finally {		
 			return resultList;
 		}

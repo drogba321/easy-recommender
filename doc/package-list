@@ -1,4 +1,15 @@
-edu.cuc.dmt.demo
 edu.recm.algorithm.algorithm
 edu.recm.algorithm.data
+edu.recm.algorithm.evaluate
 edu.recm.algorithm.similarity
+edu.recm.config.model
+edu.recm.config.web
+edu.recm.config.xml
+edu.recm.service.common
+edu.recm.service.controller
+edu.recm.util
+test.algorithm.algorithm
+test.algorithm.data
+test.config.web
+test.config.xml
+test.service

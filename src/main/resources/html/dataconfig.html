@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>配置输入数据源</title>
+	<link rel="stylesheet" href="../css/style.css" type="text/css" media="all" />
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script src="../js/jquery.cookie.js"></script>
+	<script src="../js/dataConfig.js"></script>
+</head>
+<body>
+<!-- Header -->
+<div id="header">
+	<div class="shell">
+		<!-- Logo + Top Nav -->
+		<div id="top">
+			<h1><a>Simple Recommender</a></h1>
+		</div>
+		<!-- End Logo + Top Nav -->
+		
+		<!-- Main Nav -->
+		<div id="navigation">
+			<ul>
+				<li><a><span>1.开始配置</span></a></li>
+			    <li><a class="active"><span>2.数据源参数配置</span></a></li>
+			    <li><a><span>3.相似度度量方法参数配置</span></a></li>
+			    <li><a><span>4.算法处理流程</span></a></li>
+			    <li><a><span>5.算法评估机制</span></a></li>
+				<li><a><span>6.完成配置</span></a></li>
+			</ul>
+		</div>
+		<!-- End Main Nav -->
+	</div>
+</div>
+<!-- End Header -->
+
+<!-- Container -->
+<div id="container">
+	<div class="shell">
+		
+		<!-- Small Nav -->
+		<!--<div class="small-nav">
+			<a href="#">Dashboard</a>
+			<span>&gt;</span>
+			Current Articles
+		</div>-->
+		<!-- End Small Nav -->
+
+		<!-- Main -->
+		<div id="main">
+			<div class="cl">&nbsp;</div>
+			
+			<!-- Content -->
+			<div id="content">
+				
+				<!-- Box -->
+				<div class="box" title="data" id="contentData" style="display: none">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>配置用户与项目特征数据库</h2>
+					</div>
+					<!-- End Box Head -->
+					
+					<form method="post" name="contentDataForm">
+
+						<!-- Form -->
+						<div class="form">
+							<div>
+								<p class="inline-field">
+									<label>MySQL连接配置 <span>(端口需为3306)</span></label>
+									主机名：<input type="text" class="field size4" name="dbServerName" />&nbsp;
+									用户名：<input type="text" class="field size4" name="dbUser" />&nbsp;
+									密码：<input type="password" class="field size4" name="dbPassword" />
+								</p>
+								<p>
+									<label>MySQL数据库名</label>
+									<input type="text" class="field size4" name="dbDatabaseName" />
+								</p>
+								<p>
+									<label>用户表名</label>
+									<input type="text" class="field size4" name="userTable" />
+								</p>
+								<p>
+									<label>项目表名</label>
+									<input type="text" class="field size4" name="itemTable" />
+								</p>
+								<p class="inline-field" title="queryUnitList">
+									<label>推荐算法要使用的字段<span>（可添加多组）</span></label>&nbsp;用户字段：<input type="text" class="field size4" name="userColumn" />&nbsp;项目字段：<input type="text" class="field size4" name="itemColumn" />&nbsp;匹配方式：<select class="field size3" name="occur">
+										<option value="MUST">严格匹配</option>
+										<option value="MUST_NOT">排除匹配</option>
+										<option value="SHOULD">模糊匹配</option>
+									</select>
+									<br/>
+								</p>
+								<input type="button" class="button" value="继续添加" onclick="addQueryUnit(this)" />
+							</div>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<div class="box" title="data" id="mysqlPreferenceData" style="display: none">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>配置用户偏好数据库</h2>
+					</div>
+					<!-- End Box Head -->
+
+					<form method="post" name="mysqlPreferenceDataForm">
+
+						<!-- Form -->
+						<div class="form">
+							<div>
+								<p class="inline-field">
+									<label>MySQL连接配置 <span>(端口需为3306)</span></label>
+									主机名：<input type="text" class="field size4" name="dbServerName" />&nbsp;
+									用户名：<input type="text" class="field size4" name="dbUser" />&nbsp;
+									密码：<input type="password" class="field size4" name="dbPassword" />
+								</p>
+								<p>
+									<label>MySQL数据库</label>
+									<input type="text" class="field size4" name="dbDatabaseName" />
+								</p>
+								<p>
+									<label>用户偏好数据表</label>
+									<input type="text" class="field size4" name="preferenceTable" />
+								</p>
+								<p>
+									<label>用户ID字段</label>
+									<input type="text" class="field size4" name="userIDColumn" />
+								</p>
+								<p>
+									<label>项目ID字段</label>
+									<input type="text" class="field size4" name="itemIDColumn" />
+								</p>
+								<p>
+									<label>偏好值字段（可选）</label>
+									<input type="text" class="field size4" name="preferenceColumn" />
+								</p>
+								<p>
+									<label>时间戳字段（可选）</label>
+									<input type="text" class="field size4" name="timestampColumn" />
+								</p>
+							</div>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<div class="box" title="data" id="filePreferenceData" style="display: none">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>配置用户偏好数据文件</h2>
+					</div>
+					<!-- End Box Head -->
+
+					<form method="post" name="filePreferenceDataForm">
+
+						<!-- Form -->
+						<div class="form">
+							<div>
+								<p>
+									<label>选择用户偏好数据文件</label>
+									<input type="file" name="filePath" />
+								</p>
+							</div>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<!-- End Box -->
+
+			</div>
+			<!-- End Content -->
+			<!-- Sidebar -->
+			<div id="sidebar">
+				
+				<!-- Box -->
+				<div class="box">
+					
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>功能</h2>
+					</div>
+					<!-- End Box Head-->
+					
+					<div class="box-content">
+						<p>
+							<a href="javascript:addContentData()" class="add-button"><span>用户与项目特征数据库</span></a>
+						</p>
+						<p>
+							<a href="javascript:addMySQLPreferenceData()" class="add-button"><span>用户偏好数据库</span></a>
+						</p>
+						<p>
+							<a href="javascript:addFilePreferenceData()" class="add-button"><span>用户偏好数据文件</span></a>
+						</p>
+						<p>
+
+							<input type="button" onclick="finishDataConfig()" class="next-button" value="下一步"/>
+						</p>
+						<div class="cl">&nbsp;</div>
+
+
+					</div>
+				</div>
+				<!-- End Box -->
+			</div>
+			<!-- End Sidebar -->
+			
+			<div class="cl">&nbsp;</div>			
+		</div>
+		<!-- Main -->
+	</div>
+</div>
+<!-- End Container -->
+
+<!-- Footer -->
+<div id="footer">
+	<div class="shell-bottom">
+		<span class="left-bottom">&copy; 2015 - Designed by Niuzhixiang. Communication University of China</span>
+	</div>
+</div>
+<!-- End Footer -->
+	
+</body>
+</html>

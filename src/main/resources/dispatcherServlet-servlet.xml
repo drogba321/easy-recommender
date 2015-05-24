@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd"> 		 
+	  
+	<context:annotation-config/> 
+	<context:component-scan base-package="edu.recm.service.controller"/>
+    <mvc:annotation-driven/>
+    
+    <!-- 用于静态资源（js、css、html、jpg等）的获取，将静态资源的实际视图名映射到静态资源的实际存放路径 -->
+    <mvc:resources mapping="/html/**" location="classpath:html/" />
+    <mvc:resources mapping="/css/**" location="classpath:css/" />
+    <mvc:resources mapping="/js/**" location="classpath:js/" />
+
+	<!-- InternalResourceViewResolver的配置，该视图解析器只能处理单一类型的视图（此处是html）。
+		并且该视图解析器有个bug：无论是否找到合适的视图，该视图解析器都会返回，导致优先级比它低
+		的其他视图解析器没有执行机会。因此一般将该视图解析器的优先级设为最低，在其他视图解析器都
+		尝试执行完毕后再执行该视图解析器。 -->
+   	<bean id="htmlViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+   		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+   		<property name="prefix" value="/html/"/>  
+   		<property name="suffix" value=".html"></property>  
+   		<!-- <property name="order" value="1" /> -->
+	</bean>
+	<bean id="cssViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+   		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+   		<property name="prefix" value="/css/"/>  
+   		<property name="suffix" value=".css"></property>  
+   		<!-- <property name="order" value="1" /> -->
+	</bean>
+	<bean id="jsViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+   		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+   		<property name="prefix" value="/js/"/>  
+   		<property name="suffix" value=".js"></property>  
+   		<!-- <property name="order" value="1" /> -->
+	</bean>
+</beans>

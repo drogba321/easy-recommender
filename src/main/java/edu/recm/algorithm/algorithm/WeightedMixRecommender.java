@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+
 import edu.recm.algorithm.algorithm.MyRecommender;
 import edu.recm.algorithm.data.ResultBean;
 
@@ -20,6 +22,8 @@ import edu.recm.algorithm.data.ResultBean;
  *
  */
 public class WeightedMixRecommender implements MyRecommender {
+	
+	static Logger logger = Logger.getLogger(WeightedMixRecommender.class);
 	
 	private List<Entry<MyRecommender, Float>> recommenderList;
 	
@@ -144,10 +148,9 @@ public class WeightedMixRecommender implements MyRecommender {
 		//打印最终返回的混合推荐结果集
 		List<ResultBean> returnList = finalResultList.size() < resultNum ? finalResultList : finalResultList.subList(0, resultNum);
 		for (ResultBean resultBean : returnList) {
-			System.out.println("integrating score - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
+			logger.info("integrating score - id:" + resultBean.getId() + ", score:" + resultBean.getScore());
 		}
-		System.out.println("========");
-		
+		logger.info("========================");
 		return returnList;
 	}
 	

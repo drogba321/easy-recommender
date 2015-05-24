@@ -30,7 +30,7 @@ public class MyRecommenderEvaluator {
 			RandomUtils.useTestSeed();
 			RecommenderIRStatsEvaluator evaluator = new GenericRecommenderIRStatsEvaluator();
 			RecommenderBuilder builder = new MyRecommenderBuilder(((AbstractCFRecommender) myRecommender).getRecommender());
-			return evaluator.evaluate(builder, null, ((AbstractCFRecommender) myRecommender).getPreferenceData().getDataModel(), null, 2, GenericRecommenderIRStatsEvaluator.CHOOSE_THRESHOLD, 0.3);
+			return evaluator.evaluate(builder, null, ((AbstractCFRecommender) myRecommender).getPreferenceData().getDataModel(), null, 5, GenericRecommenderIRStatsEvaluator.CHOOSE_THRESHOLD, 1.0);
 		} else {
 			throw new Exception("推荐器不是协同过滤推荐器，框架无法计算查准率和查全率等指标！");
 		}

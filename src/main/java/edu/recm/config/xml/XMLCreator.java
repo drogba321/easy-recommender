@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -47,6 +48,8 @@ import edu.recm.util.MyEntry;
  */
 public class XMLCreator {
 	
+	static Logger logger = Logger.getLogger(XMLCreator.class);
+	
 	/**
 	 * 解析推荐系统的参数配置模型，生成对应的XML配置文件
 	 * @param configModel 推荐系统的参数配置模型
@@ -84,7 +87,7 @@ public class XMLCreator {
 		format.setIndent(true);
 		format.setNewlines(true);
 		
-		System.out.println(document.asXML());
+		logger.info(document.asXML());
 		
 		String configFilePath = ConfigVariables.XML_CONFIG_FILE_DIR + recommenderID + ".xml";
 		File file = new File(configFilePath);

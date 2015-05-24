@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import edu.recm.algorithm.algorithm.MyRecommender;
 import edu.recm.config.xml.XMLAnalyzer;
-import edu.recm.service.RecommenderBuilder;
+import edu.recm.service.common.RecommenderBuilder;
 
 public class RecommenderBuilderTest {
 	

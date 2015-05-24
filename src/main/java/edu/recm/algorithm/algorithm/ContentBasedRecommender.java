@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -42,13 +43,15 @@ import edu.recm.util.MySQLUtil;
  */
 public class ContentBasedRecommender implements MyRecommender {
 	
+	static Logger logger = Logger.getLogger(ContentBasedRecommender.class);
+	
 	/**
 	 * 该推荐器所属的推荐系统名称
 	 */
 	private String recommenderSystemName;
 	
 	/**
-	 * 索引路径
+	 * 索引的根路径
 	 */
 	private static String INDEX_PATH = "D:/lucene_index/";
 	
@@ -165,7 +168,7 @@ public class ContentBasedRecommender implements MyRecommender {
 			}
 			
 			for (int i = 0; i < userFeatures.size(); i++) {
-				System.out.println("userFeatureName:" + queries.get(i).getUserField() + ", userFeatureData:" + userFeatures.get(i) + ", itemFeatureName:" + queries.get(i).getItemField());
+				logger.info("userFeatureName:" + queries.get(i).getUserField() + ", userFeatureData:" + userFeatures.get(i) + ", itemFeatureName:" + queries.get(i).getItemField());
 				QueryParser parser = new QueryParser(Version.LUCENE_CURRENT, queries.get(i).getItemField(), analyzer);
 				Query query = parser.parse(userFeatures.get(i));
 				this.booleanQuery.add(query, queries.get(i).getOccur());
@@ -223,11 +226,11 @@ public class ContentBasedRecommender implements MyRecommender {
 		for (ScoreDoc scoreDoc : hits) {
 			int id = Integer.parseInt(searcher.getSearcher().doc(scoreDoc.doc).get("ID"));
 			float score = scoreDoc.score;
-			System.out.println("id:" + id + ", score:" + score);
+			logger.info("id:" + id + ", score:" + score);
 			ResultBean rb = new ResultBean(id, score);
 			resultList.add(rb);
 		}
-		System.out.println("========");
+		logger.info("========================");
 		return resultList;
 	}
 }

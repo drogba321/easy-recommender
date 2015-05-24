@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>欢迎使用Simple Recommender</title>
+	<link rel="stylesheet" href="../css/style.css" type="text/css" media="all" />
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script src="../js/jquery.cookie.js"></script>
+	<script src="../js/startConfig.js"></script>
+</head>
+<body>
+<!-- Header -->
+<div id="header">
+	<div class="shell">
+		<!-- Logo + Top Nav -->
+		<div id="top">
+			<h1><a>Simple Recommender</a></h1>
+		</div>
+		<!-- End Logo + Top Nav -->
+		
+		<!-- Main Nav -->
+		<div id="navigation">
+			<ul>
+				<li><a class="active"><span>1.开始配置</span></a></li>
+				<li><a><span>2.数据源参数配置</span></a></li>
+				<li><a><span>3.相似度度量方法参数配置</span></a></li>
+				<li><a><span>4.算法处理流程</span></a></li>
+				<li><a><span>5.算法评估机制</span></a></li>
+				<li><a><span>6.完成配置</span></a></li>
+			</ul>
+		</div>
+		<!-- End Main Nav -->
+	</div>
+</div>
+<!-- End Header -->
+
+<!-- Container -->
+<div id="container">
+	<div class="shell">
+		
+		<!-- Small Nav -->
+		<!--<div class="small-nav">
+			<a href="#">Dashboard</a>
+			<span>&gt;</span>
+			Current Articles
+		</div>-->
+		<!-- End Small Nav -->
+
+		<!-- Main -->
+		<div id="main">
+			<div class="cl">&nbsp;</div>
+			
+			<!-- Content -->
+			<div id="content">
+				
+				<!-- Box -->
+				<div class="box" title="recommenderNameDiv" id="recommenderNameDiv">
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>开始配置</h2>
+					</div>
+					<!-- End Box Head -->
+					
+					<form method="post" name="recommenderNameForm">
+
+						<!-- Form -->
+						<div class="form">
+							<div>
+								<p class="inline-field">
+									<label>推荐系统名称</span></label>
+									<input type="text" class="field size4" name="recommenderName" />
+									<br/>
+								</p>
+							</div>
+						</div>
+						<!-- End Form -->
+					</form>
+				</div>
+
+				<!-- End Box -->
+
+			</div>
+			<!-- End Content -->
+			<!-- Sidebar -->
+			<div id="sidebar">
+				
+				<!-- Box -->
+				<div class="box">
+					
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>功能</h2>
+					</div>
+					<!-- End Box Head-->
+					
+					<div class="box-content">
+						<p>
+
+							<input type="button" onclick="startConfig()" class="next-button" value="下一步"/>
+						</p>
+						<div class="cl">&nbsp;</div>
+
+
+					</div>
+				</div>
+				<!-- End Box -->
+			</div>
+			<!-- End Sidebar -->
+			
+			<div class="cl">&nbsp;</div>			
+		</div>
+		<!-- Main -->
+	</div>
+</div>
+<!-- End Container -->
+
+<!-- Footer -->
+<div id="footer">
+	<div class="shell-bottom">
+		<span class="left-bottom">&copy; 2015 - Designed by Niuzhixiang. Communication University of China</span>
+	</div>
+</div>
+<!-- End Footer -->
+	
+</body>
+</html>

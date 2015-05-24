@@ -3,6 +3,7 @@ package edu.recm.algorithm.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -22,6 +23,8 @@ import edu.recm.algorithm.similarity.UserNeighborhoodFactory;
  *
  */
 public class UserBasedCFRecommender extends AbstractCFRecommender {
+	
+	static Logger logger = Logger.getLogger(UserBasedCFRecommender.class);
 	
 	/**
 	 * 固定大小的用户邻域大小，该字段为null时表示不使用固定大小的用户邻域，而使用基于阈值的用户邻域
@@ -70,10 +73,10 @@ public class UserBasedCFRecommender extends AbstractCFRecommender {
 			ResultBean rb = new ResultBean();
 			rb.setId(Integer.parseInt(recommendedItem.getItemID()+""));
 			rb.setScore(recommendedItem.getValue());
-			System.out.println("id:" + rb.getId() + ", score:" + rb.getScore());
+			logger.info("id:" + rb.getId() + ", score:" + rb.getScore());
 			resultList.add(rb);
 		}
-		System.out.println("========");
+		logger.info("========================");
 		return resultList;
 	}
 }
