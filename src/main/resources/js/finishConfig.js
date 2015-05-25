@@ -33,16 +33,16 @@ function renderDataConfig(){
             for(var j=0; j<queryList.length; j++){
                 var occur;
                 if(queryList[j].occur == "MUST"){
-                    occur = "严格匹配";
+                    occur = "必须匹配";
                 }
                 if(queryList[j].occur == "MUST_NOT"){
-                    occur = "排除匹配";
+                    occur = "必须排除";
                 }
                 if(queryList[j].occur == "SHOULD"){
-                    occur = "模糊匹配";
+                    occur = "非必须匹配";
                 }
 
-                $("#data"+i).find("[title='queryListOl']").append("<li>用户字段：<span title='userColumn'>" + queryList[j].userColumn + "</span>项目字段：<span title='itemColumn'>" + queryList[j].itemColumn + "</span>匹配方式：<span title='occur'>" + occur +"</span></li>");
+                $("#data"+i).find("[title='queryListOl']").append("<li>用户字段：<span title='userColumn'>" + queryList[j].userColumn + "</span>项目字段：<span title='itemColumn'>" + queryList[j].itemColumn + "</span>条件：<span title='occur'>" + occur +"</span></li>");
             }
         }
         //2、来源于MySQL的用户偏好数据
