@@ -19,11 +19,11 @@ function addQueryUnit(obj){
     queryUnitList.append("<input type='text' class='field size4' name='userColumn' />");
     queryUnitList.append("&nbsp;项目字段：");
     queryUnitList.append("<input type='text' class='field size4' name='itemColumn' />");
-    queryUnitList.append("&nbsp;匹配方式：");
+    queryUnitList.append("&nbsp;条件：");
     var occurSelect = $("<select class='field size3' name='occur' id='occur'>");
-    occurSelect.append("<option value='MUST'>严格匹配</option>");
-    occurSelect.append("<option value='MUST_NOT'>排除匹配</option>");
-    occurSelect.append("<option value='SHOULD'>模糊匹配</option>");
+    occurSelect.append("<option value='MUST'>必须匹配</option>");
+    occurSelect.append("<option value='MUST_NOT'>必须排除</option>");
+    occurSelect.append("<option value='SHOULD'>非必须匹配</option>");
     queryUnitList.append(occurSelect);
     queryUnitList.append("<br/>");
 }
